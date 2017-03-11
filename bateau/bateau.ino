@@ -13,6 +13,7 @@
 #include <math.h>
 
 #include "NRF24L01.h"
+#include "Servo_Boat.h"
 #include <Adafruit_LSM9DS0.h>
 #include <Adafruit_Sensor.h>
 
@@ -43,7 +44,8 @@ Adafruit_LSM9DS0 lsm = Adafruit_LSM9DS0();
 
 void setup()
 {
-  Serial.begin(9600);
+    Serial.begin(9600);                       // Initialize IO     
+    Setup_Servo();  
   NRF_Init();                        // Initialize IO
   Serial.println("RX_Mode start...");
   NRF_SetRxMode();
@@ -150,23 +152,47 @@ void send_data(unsigned char* data) {
 
 }
 
-bool receive_data() {
-  if (NRF_Receive(rx_buf))
-  {
-    
-    if (rx_buf[0] == 30);
-    return true;
-  }
-  return false;
+
+bool receive_data(){
+    if(NRF_Receive(rx_buf))
+    {
+        Serial.print("RX = ");
+        for(int i = 0; i < TX_PLOAD_WIDTH; i++)
+        {
+            
+            Serial.print(rx_buf[i]);
+            Serial.print(",");
+        }
+        Serial.println();
+    if(rx_buf[0]==30);
+      //Si on reçoit la DATA Correctement : 
+      //-------------Mouvement des Servo-----------------//  /*TEST TO DO*/ 
+      //--Safety :--// 
+      if(rx_buf[1]<200 && rx_buf[1]!=0 && rx_buf[2]!=0 && rx_buf[2]<200) //Fonction qui sert à éviter que le servo fasse de la merde si on reçoit de la merde.
+      {
+          //----Voile---//
+          Servo_voile(rx_buf[1]);
+          //----Gouvernaille---//
+          Servo_safran(rx_buf[2]);
+          //il faudra attendre 500ms entre 2 action de servo
+      }
+      
+      return true;
+    }
+    return false;
+
 }
 
 void loop()
-{
+{    
   update_gyro();
   unsigned char data[30];
 //  Serial.println("check rx");
   if (receive_data() == true)
     send_data(data);
   delay(30);
+  
+  
+  //Test_Servo_Potentiometre() 
 }
 
