@@ -1,0 +1,63 @@
+envoi
+0  30
+1  voile
+2  gouvervaille
+3  
+4  
+5  
+6  
+7  
+8  
+9  
+10 
+11 
+12
+13 
+14 
+15 
+16 
+17 
+18 
+19 
+20 
+21 
+22 
+23 
+24 
+25 
+26 
+27 
+28 
+29 
+
+retour
+0  25
+1  accelero X1
+2  accelero X2
+3  accelero Y1
+4  accelero Y2
+5  accelero Z1
+6  accelero Z2
+7  gyro X1
+8  gyro X2
+9  gyro Y1
+10 gyro Y2
+11 gyro Z1
+12 gyro Z2
+13 magneto X1
+14 magneto X2
+15 magneto Y1
+16 magneto Y2
+17 magneto Z1
+18 magneto Z2
+19 
+20 
+21 
+22 
+23 
+24 
+25 
+26 
+27 
+28 
+29 
