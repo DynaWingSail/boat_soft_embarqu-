@@ -9,6 +9,7 @@
 *********************************************************************/
 //bateau (embarqué)
 #include "NRF24L01.h"
+#include "Servo_Boat.h"
 
 #define TX_ADR_WIDTH    5   // 5 unsigned chars TX(RX) address width
 #define TX_PLOAD_WIDTH  30  // 32 unsigned chars TX payload
@@ -28,6 +29,7 @@ void setup()
     Serial.begin(9600);
     NRF_Init();                        // Initialize IO     
     Serial.println("RX_Mode start...");
+    Setup_Servo();  
 }
 
 void send_data(unsigned char* data){
@@ -63,9 +65,13 @@ bool receive_data(){
 
 void loop()
 {
+
   unsigned char data[30];
   if(receive_data()== true)
     send_data(data);
   delay(30);
+  
+  Test_Servo_Potentiometre();
+  
 }
 
