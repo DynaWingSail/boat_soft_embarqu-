@@ -1,7 +1,7 @@
 envoi
 0  30
-1  voile
-2  gouvervaille
+1  voile        (unsigned char a lire comme un int)
+2  gouvervaille (unsigned char a lire comme un int)
 3  
 4  
 5  
