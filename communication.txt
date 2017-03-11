@@ -1,8 +1,8 @@
 envoi
 0  30
-1  voile
-2  gouvervaille
-3  
+1  mode (auto, semi auto, manuel)
+2  gouvernail
+3  voile
 4  
 5  
 6  
@@ -51,11 +51,11 @@ retour
 17 magneto Z1
 18 magneto Z2
 19 temperature
-20 
-21 
-22 
-23 
-24 
+20 vitesse vent
+21 direction vent
+22 boussole1 (angle)
+23 boussole2
+24 vitesse vent
 25 
 26 
 27 

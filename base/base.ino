@@ -8,10 +8,23 @@
 **   IRQ - to digital pin 8 (MISO pin)                             **
 *********************************************************************/
 //base (PAS embarqué)
+#include <SoftwareSerial.h>
+SoftwareSerial DebugSerial(2, 3); // RX, TX
+
+#define BLYNK_PRINT DebugSerial
+
+#include <BlynkSimpleSerialBLE.h>
+
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = "5e4b5b7ca2d34196b32a7867061eb006";
+
+
 #include "NRF24L01.h"
 
 #define TX_ADR_WIDTH    5   // 5 unsigned chars TX(RX) address width
 #define TX_PLOAD_WIDTH  30  // 32 unsigned chars TX payload
+
 unsigned char RX_ADDRESS[TX_ADR_WIDTH]  = 
 {
   0x34,0x43,0x10,0x10,0x01
@@ -25,9 +38,12 @@ unsigned char tx_buf[TX_PLOAD_WIDTH] = {0};
 
 void setup()
 {
-    Serial.begin(9600);
+  DebugSerial.begin(9600);
+  //  Serial.begin(9600);
     NRF_Init();                        // Initialize IO     
-    Serial.println("RX_Mode start...");
+  //  Serial.println("RX_Mode start...");
+   Serial.begin(115200);
+  Blynk.begin(Serial, auth);
 }
 
 void send_data(unsigned char* data){
@@ -35,9 +51,14 @@ void send_data(unsigned char* data){
     do
     { 
       int i;
+      Serial.println("TX =");
       for(i=0;i<30;i++)
+      {
         tx_buf[i]=30-i;
-      Serial.println("TX = ?");
+//        Serial.print(tx_buf[i]);
+//        Serial.print(",");
+      }
+      Serial.println();        
       NRF_Send(tx_buf);
     }
     while(!NRF_CheckAck());
@@ -47,13 +68,19 @@ void send_data(unsigned char* data){
 bool receive_data(){
     if(NRF_Receive(rx_buf))
     {
-        Serial.print("RX = ");
+//        Serial.print("RX = ");
         for(int i = 0; i < TX_PLOAD_WIDTH; i++)
         {
-            Serial.print(rx_buf[i]);
-            Serial.print(",");
+//            Serial.print(rx_buf[i]);
+//            Serial.print(",");
         }
-        Serial.println();
+//        Serial.println();
+        long temp;
+        temp = ((int)rx_buf[21]<<8)+rx_buf[20];
+        Serial.print(temp);
+        Serial.print(",");
+        temp = ((int)rx_buf[23]<<8)+rx_buf[22];
+        Serial.println(temp);
     if(rx_buf[0]==30);
       return true;
     }
@@ -66,6 +93,6 @@ void loop()
   unsigned char data[30];
   receive_data();  
   send_data(data);
-    delay(30);
+  Blynk.run();
 }
 
