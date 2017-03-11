@@ -14,8 +14,8 @@ void Servo_safran(int angledegre)
 { 
   //Le servo est branche sur le port 3 
    
-  if(angledegre>119){angledegre=149;}
-  if(angledegre<70){angledegre=46;}
+  if(angledegre>149){angledegre=149;}
+  if(angledegre<46){angledegre=46;}
   
   servoSafran.write(angledegre);
 }

@@ -105,7 +105,7 @@ void update_gyro() {
   wind_power = sqrt(sq(x) + sq(y));
   wind_direction = 180+57.29*atan2(double(y), double(x));
 }
-void send_data(unsigned char* data) {
+void send_data() {
   NRF_SeTxMode();
   do
   {
@@ -135,15 +135,11 @@ void send_data(unsigned char* data) {
     tx_buf[22] = (char) ((unsigned int)wind_direction & 0xff);
     tx_buf[23] = (char) ((unsigned int)wind_power >> 8);
     tx_buf[24] = (char) ((unsigned int)wind_power & 0xff);
-//    for(i=0;i<30;i++){
-//      Serial.print(tx_buf[i]);
-//      Serial.print(",");
-//    }
-//    Serial.println();
-//    Serial.print("wind_direction ");
-//    Serial.println(wind_direction);
-//    Serial.print("wind_power ");
-//    Serial.println(wind_power);
+    for(i=0;i<30;i++){
+      Serial.print(tx_buf[i]);
+      Serial.print(",");
+    }
+    Serial.println();
 
     NRF_Send(tx_buf);
   }
@@ -184,13 +180,12 @@ bool receive_data(){
 }
 
 void loop()
-{    
+{
   update_gyro();
-  unsigned char data[30];
-//  Serial.println("check rx");
+  Serial.println("check rx");
   if (receive_data() == true)
-    send_data(data);
-  delay(30);
+    send_data();
+  delay(100);
   
   
   //Test_Servo_Potentiometre() 
