@@ -8,8 +8,6 @@
 **   IRQ - to digital pin 8 (MISO pin)                             **
 *********************************************************************/
 //base (PAS embarqué)
-#include <SoftwareSerial.h>
-SoftwareSerial DebugSerial(2, 3); // RX, TX
 
 
 // You should get Auth Token in the Blynk App.
@@ -49,10 +47,13 @@ void send_data(unsigned char* data){
       for(i=0;i<30;i++)
       {
         tx_buf[i]=30-i;
+      }
+      tx_buf[2]=80;
+      for(i=0;i<30;i++)
+      {
         Serial.print(tx_buf[i]);
         Serial.print(",");
       }
-      tx_buf[2]=50;
       Serial.println();        
       NRF_Send(tx_buf);
     }
