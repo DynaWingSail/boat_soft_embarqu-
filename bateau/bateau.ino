@@ -55,6 +55,9 @@ void setup()
     while (1);
   }
   Serial.println("init finished");
+
+  pinMode(52,OUTPUT);
+  digitalWrite(52,HIGH); // led de tunning.
 }
 void angle(int* angle)
 {
