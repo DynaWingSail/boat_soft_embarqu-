@@ -50,9 +50,9 @@
 #define TX_PLOAD_WIDTH  30  // 3 unsigned chars TX payload 
 //----------------------------------------------------------------------------------------------
 #define CE           9   // Chip Enable Activates RX or TX mode     
-#define CSN          10  // SPI Chip Select ,Slave Enable signal, controlled by master
+#define CSN          10  // SPI Chip Select ,Slave Enable signal, controlled by master        FAT CONFLICT............ PIN 6 OKE ? 
 #define SCK_PIN      13  // SPI Clock,controlled by master   
-#define MOSI_PIN     11  // SPI Master Data Output,Slave Data Input    
+#define MOSI_PIN     11  // SPI Master Data Output,Slave Data Input                           FAT CONFLICT............ PIN 7 OKE ? 
 #define MISO_PIN     12  // SPI Master Data Input, Slave Data Output, with tri-state option
 #define IRQ          8   // Maskable interrupt pin
 //----------------------------------------------------------------------------------------------
