@@ -85,6 +85,7 @@ void setup()
   recognizer.setThreshold(5);      // uncomment and set to a higher value (valid range 2-95) if you have a problems due to a noisy environment.
   
   //------------------------------------END_PHRASE_APRISE-------------------------------------------------------//
+  pinMode(52,INPUT);
 
 }
 
@@ -143,6 +144,8 @@ void loop()
   send_data(data);
   delay(100);
 
+if(digitalRead(52)) {Etat=1;} else{Etat=0;}
+
 if(Etat==0)
 {  
 
@@ -185,10 +188,7 @@ if(Etat==0)
     recognizer.say("Ok see you By by kiss love keur keur");
   }
 
-    if(res==10) { //"manual control"
-     recognizer.say("Lets use Manual Conrol");
-     Etat=1; 
-    }
+
 }    
 
 if(Etat==1)
@@ -201,13 +201,6 @@ if(Etat==1)
       consigne_voile=map(Joy_X,0,1024,70,119);
       consigne_safran=map(Joy_Y,0,1024,46,149);
       delay(100);
-
-  signed int res=recognizer.poll();
-  
-    if(res==11) { //"STOP Manual Control"
-     recognizer.say("now Stop Manual Control");
-     Etat=0; 
-    }
   //-----------------------------------------End Code Joystick--------------------------------//
 }  
   
