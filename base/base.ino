@@ -26,6 +26,10 @@
 
 const int led_port_side = 3;
 const int led_star_board = 4;
+int Etat=0;
+
+int Pin_Joy_X = A2;    // select the input pin for the potentiometer
+int Pin_Joy_Y = A3;
 
 MOVI recognizer(true);            // Get a MOVI object, true enables serial monitor interface, rx and tx can be passed as parameters for alternate communication pins on AVR architecture
 
@@ -90,6 +94,8 @@ void setup()
 
   recognizer.addSentence("start up week end"); //Add sentence 8
   recognizer.addSentence("presentation is over"); //Add sentence 9
+  recognizer.addSentence("manual control"); //Add sentence 10
+  recognizer.addSentence("now Stop Manual Control"); //Add sentence 11
   
   recognizer.train();              // Train (may take 20seconds) 
 
@@ -153,6 +159,12 @@ void loop()
   send_data(data);
   delay(100);
   */
+
+switch(Etat)
+{
+
+  case 0 :  //par defaut commande vocala
+{
   //----------------------- Test Reconaissance Vocale -----------------------------//
   
   signed int res=recognizer.poll(); // Get result from MOVI, 0 denotes nothing happened, negative values denote events (see docs)
@@ -195,10 +207,36 @@ void loop()
     if (res==9) { // Presentation is over
     recognizer.say("Ok see you By by kiss love keur keur");
   }
-  
 
+    if(res==10) { //"manual control"
+     recognizer.say("Lets use Manual Conrol");
+     Etat=1; 
+    }
   //----------------------- Fin Test Reconaissance Vocale -------------------------//
+  break;
+}
+  case 1:
+{
+  //-----------------------------------------Code Joystick------------------------------------//
   
+      int Joy_X = analogRead(Pin_Joy_X);
+      int Joy_Y = analogRead(Pin_Joy_Y);
+
+      consigne_voile=map(Joy_X,0,1024,70,119);
+      consigne_safran=map(Joy_Y,0,1024,46,149);
+      delay(100);
+
+  signed int res=recognizer.poll();
   
+    if(res==11) { //"STOP Manual Control"
+     recognizer.say("now Stop Manual Control");
+     Etat=0; 
+    }
+  //-----------------------------------------End Code Joystick--------------------------------//
+  break;
+}
+
+}
+
 }
 
