@@ -49,12 +49,12 @@
 #define TX_ADR_WIDTH    5  // 5 unsigned chars TX(RX) address width   
 #define TX_PLOAD_WIDTH  30  // 3 unsigned chars TX payload 
 //----------------------------------------------------------------------------------------------
-#define CE           9   // Chip Enable Activates RX or TX mode     
-#define CSN          10  // SPI Chip Select ,Slave Enable signal, controlled by master
-#define SCK_PIN      13  // SPI Clock,controlled by master   
-#define MOSI_PIN     11  // SPI Master Data Output,Slave Data Input    
-#define MISO_PIN     12  // SPI Master Data Input, Slave Data Output, with tri-state option
-#define IRQ          8   // Maskable interrupt pin
+#define IRQ          19  // Maskable interrupt pin
+#define CE           18  // Chip Enable Activates RX or TX mode     
+#define CSN          17  // SPI Chip Select ,Slave Enable signal, controlled by master
+#define MOSI_PIN     16  // SPI Master Data Output,Slave Data Input    
+#define MISO_PIN     15  // SPI Master Data Input, Slave Data Output, with tri-state option
+#define SCK_PIN      14  // SPI Clock,controlled by master   
 //----------------------------------------------------------------------------------------------
 
 //-------------------------------------private function-----------------------------------------
